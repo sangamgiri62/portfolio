@@ -1,85 +1,317 @@
-/* Import Google Font */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap');
-
-
-* {
-    font-family: 'Poppins', sans-serif;
-}
-
-.bg-deamblue {
-    background-color: rgba(0, 166, 255, 0.2) !important;
-}
 
 :root {
-    --heading-font: 'Playfair Display', serif;
-    --body-font: 'Poppins', sans-serif;
-    --blue-color: #00A6FF;
-    --p-color: #555555;
-    --gray-color: #DAE0E6;
+    --primary-start: #6a11cb;
+    --primary-end: #2575fc;
+    --gradient: linear-gradient(100deg, var(--primary-start), var(--primary-end));
+    --bg: #f8f9fa;
+    --fg: #212529;
+    --muted: #6c757d;
+    --card-bg: #ffffff;
+    --navbar-bg: rgba(255, 255, 255, 0.85);
+    --link: var(--primary-start);
+    --badge-bg: rgba(106, 17, 203, 0.1);
+    --badge-fg: var(--primary-start);
+    --shadow-color: rgba(0, 0, 0, 0.05);
+    --timeline-border: #e9ecef;
+    --btn-outline-fg: var(--muted);
+    --btn-outline-border: var(--muted);
 }
 
-.text-blue {
-    color: var(--blue-color) !important;
+[data-theme="dark"] {
+    --bg: #121212;
+    --fg: #f1f1f1;
+    --muted: #a9a9b3;
+    --card-bg: #1e1e1e;
+    --navbar-bg: rgba(20, 20, 20, 0.85);
+    --link: #8ab4f8;
+    --badge-bg: rgba(138, 180, 248, 0.15);
+    --badge-fg: #8ab4f8;
+    --shadow-color: rgba(0, 0, 0, 0.2);
+    --timeline-border: #333;
+    --btn-outline-fg: var(--muted);
+    --btn-outline-border: var(--muted);
 }
 
-.bg-blue {
-    background-color: var(--blue-color) !important;
+html {
+    scroll-behavior: smooth;
 }
 
-.bg-gray {
-    background-color: var(--gray-color) !important;
+body {
+    font-family: 'Poppins', sans-serif;
+    background: var(--bg);
+    color: var(--fg);
+    transition: background 0.4s, color 0.4s;
+    overflow-x: hidden;
+
 }
 
-.border-blue {
-    background-color: var(--blue-color) !important;
-}
-
-/* Apply Playfair Display to All Headings */
 h1,
 h2,
 h3,
 h4,
 h5,
 h6 {
-    font-family: var(--heading-font) !important;
-    color: black !important;
+    color: var(--fg);
 }
 
-.my-skills .progress-bar {
-    width: 100%;
-    height: 8px;
-    background-color: #ddd;
-    border-radius: 5px;
-    overflow: hidden;
+[data-theme="dark"] .text-muted {
+    color: var(--muted) !important;
+}
+
+/* Navbar */
+.navbar {
+    background: transparent;
+    transition: background 0.4s, box-shadow 0.4s;
+}
+
+.navbar.scrolled {
+    background: var(--navbar-bg) !important;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 2px 10px var(--shadow-color);
+}
+
+.navbar-brand {
+    font-weight: 600;
+}
+
+.navbar-brand,
+.nav-link {
+    color: var(--fg) !important;
+}
+
+.nav-link:hover,
+.nav-link.active {
+    background: var(--gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent !important;
+    font-weight: 500;
+}
+
+.navbar-toggler {
+    border: none;
+}
+
+.navbar-toggler:focus {
+    box-shadow: none;
+}
+
+/* Hero */
+#hero {
+    /* min-height: 100vh; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 80px 15px;
+}
+
+.hero-avatar {
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 5px solid;
+    border-image: var(--gradient) 1;
+    box-shadow: 0 0 30px var(--shadow-color);
+}
+
+.gradient-text {
+    background: var(--gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.hero-social a,
+.contact-social a {
+    margin: 0 10px;
+    color: var(--fg);
+    font-size: 1.5rem;
+    transition: color 0.3s, transform 0.3s;
+}
+
+.hero-social a:hover,
+.contact-social a:hover {
+    color: var(--link);
+    transform: translateY(-3px);
+}
+
+/* Sections General */
+section {
+    padding: 80px 0;
+}
+
+.section-title {
+    font-weight: 700;
+}
+
+.section-subtitle {
+    margin-bottom: 4rem;
+}
+
+.bg-subtle {
+    background-color: var(--card-bg);
+}
+
+/* About Section - Timeline */
+.timeline {
     position: relative;
+    border-left: 2px solid var(--timeline-border);
 }
 
-.my-skills .progress {
+.timeline li {
+    position: relative;
+    padding-left: 2rem;
+}
+
+.timeline li::before {
+    content: '';
+    position: absolute;
+    left: -9px;
+    top: 6px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--gradient);
+}
+
+/* Cards */
+.card-custom {
+    background: var(--card-bg);
+    color: var(--fg);
+    border-radius: 15px;
+    box-shadow: 0 4px 15px var(--shadow-color);
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
     height: 100%;
-    background-color: #00a6ff;
-    width: 0;
-    /* Default */
-    transition: width 1s ease-in-out;
+    border: none;
 }
 
-p {
-    font-family: var(--body-font);
-    color: var(--p-color);
+.card-custom:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 30px var(--shadow-color);
 }
 
-.footer p,
-.footer a,
-.footer span,
-.footer h5 {
+.card-custom img {
+    transition: transform 0.4s ease;
+}
 
+.card-custom:hover img {
+    transform: scale(1.05);
+}
+
+.badge {
+    font-weight: 500;
+    padding: 0.5em 0.9em;
+    background-color: var(--badge-bg);
+    color: var(--badge-fg);
+    border: 1px solid transparent;
+}
+
+/* Buttons */
+.btn-primary {
+    background: var(--gradient);
+    background-size: 200% auto;
     color: #fff !important;
+    border: none;
+    transition: all 0.4s ease;
+    font-weight: 500;
 }
 
-a {
-    text-decoration: none !important;
-    color: #555555 !important;
+.btn-primary:hover {
+    background-position: right center;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(106, 17, 203, 0.4);
 }
 
-footer a:hover {
-    color: #00a6ff !important;
+.btn-outline-secondary {
+    color: var(--btn-outline-fg);
+    border-color: var(--btn-outline-border);
+}
+
+.btn-outline-secondary:hover {
+    color: #fff;
+    background-color: var(--btn-outline-fg);
+    border-color: var(--btn-outline-border);
+}
+
+/* === CONTACT SECTION & FORM FIX === */
+.contact-info-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    color: var(--fg);
+    text-decoration: none;
+}
+
+.contact-info-item i {
+    font-size: 1.5rem;
+    margin-right: 1rem;
+    color: var(--link);
+}
+
+.contact-info-item:hover,
+.contact-info-item:hover span {
+    color: var(--link);
+}
+
+.contact-form .form-control {
+    background-color: var(--bg);
+    /* Use page bg for inset look */
+    border: 1px solid var(--timeline-border);
+    color: var(--fg);
+    padding: 0.9rem 1rem;
+}
+
+/* Style the placeholder text */
+.contact-form .form-control::placeholder {
+    color: var(--muted);
+    opacity: 1;
+    /* Override Firefox's lower opacity */
+}
+
+.contact-form .form-control:focus {
+    border-color: var(--primary-start);
+    box-shadow: 0 0 0 .2rem rgba(106, 17, 203, .25);
+    background-color: var(--bg);
+    color: var(--fg);
+}
+
+/* Footer */
+.site-footer {
+    background: var(--card-bg);
+    color: var(--muted);
+    text-align: center;
+    padding: 40px 0;
+    font-size: 0.9rem;
+}
+
+/* Scroll-to-top Button */
+#scrollTop {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    width: 45px;
+    height: 45px;
+    background: var(--gradient);
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    font-size: 1.3rem;
+    cursor: pointer;
+    z-index: 1000;
+    transition: opacity 0.3s, transform 0.3s;
+    opacity: 0;
+    transform: translateY(10px);
+}
+
+#scrollTop.show {
+    display: flex;
+    opacity: 1;
+    transform: translateY(0);
 }
