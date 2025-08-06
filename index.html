@@ -19,6 +19,328 @@
 
 </head>
 
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+
+    :root {
+        --primary-start: #6a11cb;
+        --primary-end: #2575fc;
+        --gradient: linear-gradient(100deg, var(--primary-start), var(--primary-end));
+        --bg: #f8f9fa;
+        --fg: #212529;
+        --muted: #6c757d;
+        --card-bg: #ffffff;
+        --navbar-bg: rgba(255, 255, 255, 0.85);
+        --link: var(--primary-start);
+        --badge-bg: rgba(106, 17, 203, 0.1);
+        --badge-fg: var(--primary-start);
+        --shadow-color: rgba(0, 0, 0, 0.05);
+        --timeline-border: #e9ecef;
+        --btn-outline-fg: var(--muted);
+        --btn-outline-border: var(--muted);
+    }
+
+    [data-theme="dark"] {
+        --bg: #121212;
+        --fg: #f1f1f1;
+        --muted: #a9a9b3;
+        --card-bg: #1e1e1e;
+        --navbar-bg: rgba(20, 20, 20, 0.85);
+        --link: #8ab4f8;
+        --badge-bg: rgba(138, 180, 248, 0.15);
+        --badge-fg: #8ab4f8;
+        --shadow-color: rgba(0, 0, 0, 0.2);
+        --timeline-border: #333;
+        --btn-outline-fg: var(--muted);
+        --btn-outline-border: var(--muted);
+    }
+
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        font-family: 'Poppins', sans-serif;
+        background: var(--bg);
+        color: var(--fg);
+        transition: background 0.4s, color 0.4s;
+        overflow-x: hidden;
+
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        color: var(--fg);
+    }
+
+    [data-theme="dark"] .text-muted {
+        color: var(--muted) !important;
+    }
+
+    /* Navbar */
+    .navbar {
+        background: transparent;
+        transition: background 0.4s, box-shadow 0.4s;
+    }
+
+    .navbar.scrolled {
+        background: var(--navbar-bg) !important;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        box-shadow: 0 2px 10px var(--shadow-color);
+    }
+
+    .navbar-brand {
+        font-weight: 600;
+    }
+
+    .navbar-brand,
+    .nav-link {
+        color: var(--fg) !important;
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+        background: var(--gradient);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent !important;
+        font-weight: 500;
+    }
+
+    .navbar-toggler {
+        border: none;
+    }
+
+    .navbar-toggler:focus {
+        box-shadow: none;
+    }
+
+    /* Hero */
+    #hero {
+        /* min-height: 100vh; */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 80px 15px;
+    }
+
+    .hero-avatar {
+        width: 220px;
+        height: 220px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 5px solid;
+        border-image: var(--gradient) 1;
+        box-shadow: 0 0 30px var(--shadow-color);
+    }
+
+    .gradient-text {
+        background: var(--gradient);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+    }
+
+    .hero-social a,
+    .contact-social a {
+        margin: 0 10px;
+        color: var(--fg);
+        font-size: 1.5rem;
+        transition: color 0.3s, transform 0.3s;
+    }
+
+    .hero-social a:hover,
+    .contact-social a:hover {
+        color: var(--link);
+        transform: translateY(-3px);
+    }
+
+    /* Sections General */
+    section {
+        padding: 80px 0;
+    }
+
+    .section-title {
+        font-weight: 700;
+    }
+
+    .section-subtitle {
+        margin-bottom: 4rem;
+    }
+
+    .bg-subtle {
+        background-color: var(--card-bg);
+    }
+
+    /* About Section - Timeline */
+    .timeline {
+        position: relative;
+        border-left: 2px solid var(--timeline-border);
+    }
+
+    .timeline li {
+        position: relative;
+        padding-left: 2rem;
+    }
+
+    .timeline li::before {
+        content: '';
+        position: absolute;
+        left: -9px;
+        top: 6px;
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        background: var(--gradient);
+    }
+
+    /* Cards */
+    .card-custom {
+        background: var(--card-bg);
+        color: var(--fg);
+        border-radius: 15px;
+        box-shadow: 0 4px 15px var(--shadow-color);
+        overflow: hidden;
+        transition: transform 0.3s, box-shadow 0.3s;
+        height: 100%;
+        border: none;
+    }
+
+    .card-custom:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 12px 30px var(--shadow-color);
+    }
+
+    .card-custom img {
+        transition: transform 0.4s ease;
+    }
+
+    .card-custom:hover img {
+        transform: scale(1.05);
+    }
+
+    .badge {
+        font-weight: 500;
+        padding: 0.5em 0.9em;
+        background-color: var(--badge-bg);
+        color: var(--badge-fg);
+        border: 1px solid transparent;
+    }
+
+    /* Buttons */
+    .btn-primary {
+        background: var(--gradient);
+        background-size: 200% auto;
+        color: #fff !important;
+        border: none;
+        transition: all 0.4s ease;
+        font-weight: 500;
+    }
+
+    .btn-primary:hover {
+        background-position: right center;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(106, 17, 203, 0.4);
+    }
+
+    .btn-outline-secondary {
+        color: var(--btn-outline-fg);
+        border-color: var(--btn-outline-border);
+    }
+
+    .btn-outline-secondary:hover {
+        color: #fff;
+        background-color: var(--btn-outline-fg);
+        border-color: var(--btn-outline-border);
+    }
+
+    /* === CONTACT SECTION & FORM FIX === */
+    .contact-info-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 1.5rem;
+        color: var(--fg);
+        text-decoration: none;
+    }
+
+    .contact-info-item i {
+        font-size: 1.5rem;
+        margin-right: 1rem;
+        color: var(--link);
+    }
+
+    .contact-info-item:hover,
+    .contact-info-item:hover span {
+        color: var(--link);
+    }
+
+    .contact-form .form-control {
+        background-color: var(--bg);
+        /* Use page bg for inset look */
+        border: 1px solid var(--timeline-border);
+        color: var(--fg);
+        padding: 0.9rem 1rem;
+    }
+
+    /* Style the placeholder text */
+    .contact-form .form-control::placeholder {
+        color: var(--muted);
+        opacity: 1;
+        /* Override Firefox's lower opacity */
+    }
+
+    .contact-form .form-control:focus {
+        border-color: var(--primary-start);
+        box-shadow: 0 0 0 .2rem rgba(106, 17, 203, .25);
+        background-color: var(--bg);
+        color: var(--fg);
+    }
+
+    /* Footer */
+    .site-footer {
+        background: var(--card-bg);
+        color: var(--muted);
+        text-align: center;
+        padding: 40px 0;
+        font-size: 0.9rem;
+    }
+
+    /* Scroll-to-top Button */
+    #scrollTop {
+        display: none;
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        bottom: 25px;
+        right: 25px;
+        width: 45px;
+        height: 45px;
+        background: var(--gradient);
+        color: #fff;
+        border: none;
+        border-radius: 50%;
+        font-size: 1.3rem;
+        cursor: pointer;
+        z-index: 1000;
+        transition: opacity 0.3s, transform 0.3s;
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    #scrollTop.show {
+        display: flex;
+        opacity: 1;
+        transform: translateY(0);
+    }
+</style>
+
 <body>
 
     <!-- Navbar -->
@@ -229,8 +551,7 @@
             <div class="row g-4">
                 <div class="col-lg-6">
                     <div class="card-custom p-4 d-flex align-items-center">
-                        <i class="bi bi-award-fill fs-2 me-4"
-                           ></i>
+                        <i class="bi bi-award-fill fs-2 me-4"></i>
                         <div>
                             <h5 class="fw-semibold mb-1">Frontend Developer Internship</h5>
                             <p class="text-muted mb-1">Tuki Soft Pvt. Ltd. (6 Months)</p>
@@ -241,8 +562,7 @@
                 </div>
                 <div class="col-lg-6">
                     <div class="card-custom p-4 d-flex align-items-center">
-                        <i class="bi bi-patch-check-fill fs-2 me-4"
-                           ></i>
+                        <i class="bi bi-patch-check-fill fs-2 me-4"></i>
                         <div>
                             <h5 class="fw-semibold mb-1">Responsive Web Design</h5>
                             <p class="text-muted mb-1">Issued by: freeCodeCamp</p>
@@ -330,6 +650,44 @@
     <!-- Scroll-to-top Button -->
     <button id="scrollTop" title="Go to top"><i class="bi bi-arrow-up"></i></button>
 
+    <script>
+        AOS.init({ duration: 800, once: true, offset: 50 });
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const themeIcon = themeToggleBtn.querySelector('i');
+        const applyTheme = (theme) => {
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
+            themeIcon.classList.toggle('bi-sun-fill', theme === 'dark');
+            themeIcon.classList.toggle('bi-moon-stars-fill', theme === 'light');
+        };
+        themeToggleBtn.addEventListener('click', () => {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            applyTheme(currentTheme === 'dark' ? 'light' : 'dark');
+        });
+        const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        applyTheme(savedTheme);
+        const navbar = document.querySelector('.navbar');
+        const scrollTopBtn = document.getElementById('scrollTop');
+        window.addEventListener('scroll', () => {
+            navbar.classList.toggle('scrolled', window.scrollY > 50);
+            scrollTopBtn.classList.toggle('show', window.scrollY > 300);
+        });
+        scrollTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+        document.getElementById('copyright-year').textContent = new Date().getFullYear();
+        const navLinks = document.querySelectorAll('.nav-link');
+        const menuToggle = document.getElementById('navMenu');
+        if (menuToggle) {
+            const bsCollapse = new bootstrap.Collapse(menuToggle, { toggle: false });
+            navLinks.forEach((link) => {
+                link.addEventListener('click', () => {
+                    if (menuToggle.classList.contains('show')) {
+                        bsCollapse.toggle();
+                    }
+                });
+            });
+        }
+
+    </script>
     <!-- Scripts -->
     <script src="script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
