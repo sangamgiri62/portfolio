@@ -1,461 +1,691 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Sangam Giri</title>
-    <link rel="stylesheet" href="style.css" />
-    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet" />
+    <link rel="icon" href="assets/favicon.png">
+    <!-- Bootstrap & Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <!-- Fonts & AOS -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-start: #6a11cb;
+            --primary-end: #2575fc;
+            --gradient: linear-gradient(100deg, var(--primary-start), var(--primary-end));
+            --bg: #f8f9fa;
+            --fg: #212529;
+            --muted: #6c757d;
+            --card-bg: #ffffff;
+            --navbar-bg: rgba(255, 255, 255, 0.85);
+            --link: var(--primary-start);
+            --badge-bg: rgba(106, 17, 203, 0.1);
+            --badge-fg: var(--primary-start);
+            --shadow-color: rgba(0, 0, 0, 0.05);
+            --timeline-border: #e9ecef;
+            --btn-outline-fg: var(--muted);
+            --btn-outline-border: var(--muted);
+        }
+
+        [data-theme="dark"] {
+            --bg: #121212;
+            --fg: #f1f1f1;
+            --muted: #a9a9b3;
+            --card-bg: #1e1e1e;
+            --navbar-bg: rgba(20, 20, 20, 0.85);
+            --link: #8ab4f8;
+            --badge-bg: rgba(138, 180, 248, 0.15);
+            --badge-fg: #8ab4f8;
+            --shadow-color: rgba(0, 0, 0, 0.2);
+            --timeline-border: #333;
+            --btn-outline-fg: var(--muted);
+            --btn-outline-border: var(--muted);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--bg);
+            color: var(--fg);
+            transition: background 0.4s, color 0.4s;
+            overflow-x: hidden;
+
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            color: var(--fg);
+        }
+
+        [data-theme="dark"] .text-muted {
+            color: var(--muted) !important;
+        }
+
+        /* Navbar */
+        .navbar {
+            background: transparent;
+            transition: background 0.4s, box-shadow 0.4s;
+        }
+
+        .navbar.scrolled {
+            background: var(--navbar-bg) !important;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 2px 10px var(--shadow-color);
+        }
+
+        .navbar-brand {
+            font-weight: 600;
+        }
+
+        .navbar-brand,
+        .nav-link {
+            color: var(--fg) !important;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent !important;
+            font-weight: 500;
+        }
+
+        .navbar-toggler {
+            border: none;
+        }
+
+        .navbar-toggler:focus {
+            box-shadow: none;
+        }
+
+        /* Hero */
+        #hero {
+            /* min-height: 100vh; */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 80px 15px;
+        }
+
+        .hero-avatar {
+            width: 220px;
+            height: 220px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid;
+            border-image: var(--gradient) 1;
+            box-shadow: 0 0 30px var(--shadow-color);
+        }
+
+        .gradient-text {
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .hero-social a,
+        .contact-social a {
+            margin: 0 10px;
+            color: var(--fg);
+            font-size: 1.5rem;
+            transition: color 0.3s, transform 0.3s;
+        }
+
+        .hero-social a:hover,
+        .contact-social a:hover {
+            color: var(--link);
+            transform: translateY(-3px);
+        }
+
+        /* Sections General */
+        section {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            font-weight: 700;
+        }
+
+        .section-subtitle {
+            margin-bottom: 4rem;
+        }
+
+        .bg-subtle {
+            background-color: var(--card-bg);
+        }
+
+        /* About Section - Timeline */
+        .timeline {
+            position: relative;
+            border-left: 2px solid var(--timeline-border);
+        }
+
+        .timeline li {
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .timeline li::before {
+            content: '';
+            position: absolute;
+            left: -9px;
+            top: 6px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--gradient);
+        }
+
+        /* Cards */
+        .card-custom {
+            background: var(--card-bg);
+            color: var(--fg);
+            border-radius: 15px;
+            box-shadow: 0 4px 15px var(--shadow-color);
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            height: 100%;
+            border: none;
+        }
+
+        .card-custom:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 30px var(--shadow-color);
+        }
+
+        .card-custom img {
+            transition: transform 0.4s ease;
+        }
+
+        .card-custom:hover img {
+            transform: scale(1.05);
+        }
+
+        .badge {
+            font-weight: 500;
+            padding: 0.5em 0.9em;
+            background-color: var(--badge-bg);
+            color: var(--badge-fg);
+            border: 1px solid transparent;
+        }
+
+        /* Buttons */
+        .btn-primary {
+            background: var(--gradient);
+            background-size: 200% auto;
+            color: #fff !important;
+            border: none;
+            transition: all 0.4s ease;
+            font-weight: 500;
+        }
+
+        .btn-primary:hover {
+            background-position: right center;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(106, 17, 203, 0.4);
+        }
+
+        .btn-outline-secondary {
+            color: var(--btn-outline-fg);
+            border-color: var(--btn-outline-border);
+        }
+
+        .btn-outline-secondary:hover {
+            color: #fff;
+            background-color: var(--btn-outline-fg);
+            border-color: var(--btn-outline-border);
+        }
+
+        /* === CONTACT SECTION & FORM FIX === */
+        .contact-info-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            color: var(--fg);
+            text-decoration: none;
+        }
+
+        .contact-info-item i {
+            font-size: 1.5rem;
+            margin-right: 1rem;
+            color: var(--link);
+        }
+
+        .contact-info-item:hover,
+        .contact-info-item:hover span {
+            color: var(--link);
+        }
+
+        .contact-form .form-control {
+            background-color: var(--bg);
+            /* Use page bg for inset look */
+            border: 1px solid var(--timeline-border);
+            color: var(--fg);
+            padding: 0.9rem 1rem;
+        }
+
+        /* Style the placeholder text */
+        .contact-form .form-control::placeholder {
+            color: var(--muted);
+            opacity: 1;
+            /* Override Firefox's lower opacity */
+        }
+
+        .contact-form .form-control:focus {
+            border-color: var(--primary-start);
+            box-shadow: 0 0 0 .2rem rgba(106, 17, 203, .25);
+            background-color: var(--bg);
+            color: var(--fg);
+        }
+
+        /* Footer */
+        .site-footer {
+            background: var(--card-bg);
+            color: var(--muted);
+            text-align: center;
+            padding: 40px 0;
+            font-size: 0.9rem;
+        }
+
+        /* Scroll-to-top Button */
+        #scrollTop {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            width: 45px;
+            height: 45px;
+            background: var(--gradient);
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            font-size: 1.3rem;
+            cursor: pointer;
+            z-index: 1000;
+            transition: opacity 0.3s, transform 0.3s;
+            opacity: 0;
+            transform: translateY(10px);
+        }
+
+        #scrollTop.show {
+            display: flex;
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top">
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg fixed-top py-3">
         <div class="container">
-            <a class="navbar-brand fs-4 fw-medium" href="#">Sangam<span class="text-blue">.Giri</span></a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
+            <a class="navbar-brand" href="#hero">Sangam Giri</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu"
+                aria-controls="navMenu" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="bi bi-list" style="color: var(--fg); font-size: 1.8rem;"></i>
             </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 gap-2 fw-medium">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+            <div class="collapse navbar-collapse" id="navMenu">
+                <ul class="navbar-nav ms-auto gap-lg-4">
+                    <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#skills">Skills</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#projects">Projects</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#certificates">Certificates</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+                    <li class="nav-item d-flex align-items-center ms-lg-3 mt-3 mt-lg-0">
+                        <button id="theme-toggle" class="btn btn-sm"
+                            style="color: var(--muted); border-color: var(--muted);" aria-label="Toggle theme">
+                            <i class="bi bi-moon-stars-fill"></i>
+                        </button>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="#">About</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="#">Projects</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="#">Skills</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="#">Contact</a>
-                    </li>
-                  
                 </ul>
             </div>
         </div>
     </nav>
 
-    <section class="details mt-5 py-5 bg-white">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-7 my-5">
-                    <span class=" rounded-4 py-1 px-3 my-2 border-0"
-                        style="width: auto; background-color: rgba(0, 166, 255, 0.2); color: #00a6ff;"> Who am I? You
-                        Know
-                    </span>
-                    <h1 class="fw-bolder mt-3 mb-2"> Hello, I'am <span class="text-blue">Sangam Giri</span> </h1>
-                    <p>Crafting engaging and responsive web experiences with HTML, CSS, JavaScript, Bootstrap, and
-                        Next.js. </p>
-                    <div class="d-flex gap-3">
-                        <button class="bg-blue border-0 rounded-4 text-white py-1 px-3"> View my Work <span><i
-                                    class="bi bi-arrow-right"></i></span> </button>
-                        <button class="bg-white border-2 rounded-4 text-blue py-1 px-3"
-                            style="border: 1px solid #00a6ff"> Get in Touch</button>
-                    </div>
-                </div>
-                <div class="col-lg-5 d-flex justify-content-center align-items-center my-5">
-                    <img src="/image/my.png" alt="" class="img-fluid rounded-circle h w-50 border-3" />
-                </div>
-            </div>
-        </div>
-    </section>
-    <section class="about-me my-5">
-        <div class="container text-center">
-            <div>
-                <div class="d-inline-block">
-                    <h1 class="text-center fw-bold mb-0">About Me</h1>
-                    <div class="border border-2 border-primary rounded-5"></div>
-                </div>
-                <p class="text-center mt-3"> Check out some of my recent work and the technologies I've been working
-                    with </p>
-            </div>
-            <div class="row my-4">
-                <div class="col-lg-6 my-3">
-                    <img src="/image/code.jpg" alt="img-fluid" class=" w-100 rounded-3" />
-                </div>
-                <div class="col-lg-6 my-2 text-start">
-                    <h1>Frontend Developer & IT Student</h1>
-                    <p> I am a passionate Frontend Developer currently pursuing a B.Sc. in Information Technology at
-                        Infomax College. As a fourth-semester student, I blend academic knowledge with practical
-                        development skills. My journey in web development is driven by a love for creating intuitive,
-                        responsive interfaces that deliver exceptional user experiences. I'm constantly learning and
-                        expanding my skills to solve complex problems and embrace emerging technologies </p>
-                    <div class="row">
-                        <div class="col-lg-6 my-2">
-                            <div>
-                                <h5>Name:</h5>
-                                <p>Sangam Giri</p>
-                            </div>
-                            <div>
-                                <h5>Email:</h5>
-                                <p>girisangam64@gmail.com</p>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div>
-                                <h5>Education:</h5>
-                                <p>Bsc. IT (5th Semester) </p>
-                            </div>
-                            <div>
-                                <h5>Location:</h5>
-                                <p>Pokhara-12, Kaski, Nepal</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <button
-                    class="bg-blue text-white border-0 rounded-3 w-auto m-auto my-4 px-3 py-2 d-flex align-items-center justify-content-center">
-                    <i class="bi bi-download me-2"></i> Download </button>
-            </div>
-        </div>
-        </div>
-    </section>
+    <!-- Hero -->
+    <section id="hero">
+        <div class="container my-2" data-aos="fade-up">
+            <img src="image/myphoto.jpg" alt="Sangam Giri" class="hero-avatar border-0 mb-4">
+            <h1 class="display-3 fw-bold gradient-text">Sangam Giri</h1>
+            <h2 class="fs-4 fw-light mb-4">Frontend Developer & UI/UX Enthusiast</h2>
+            <p class="lead text-muted mb-4 mx-auto" style="max-width: 650px;">
+                Dedicated IT student passionate about building responsive, accessible, and modern web applications with
+                a focus on creating user-friendly solutions.
+            </p>
+            <div class="mb-4 hero-social">
+                <a href="https://github.com/sangamgiri62" class="text-decoration-none" target="_blank"
+                    aria-label="GitHub">
+                    <i class="bi bi-github"></i>
+                </a>
+                <a href="https://www.linkedin.com/in/sangam-giri-98442b32b" class="text-decoration-none" target="_blank"
+                    aria-label="LinkedIn">
+                    <i class="bi bi-linkedin"></i>
+                </a>
+                <a href="https://www.instagram.com/sangamgiri01" class="text-decoration-none" target="_blank"
+                    aria-label="Instagram">
+                    <i class="bi bi-instagram"></i>
+                </a>
 
-    <section class="my-projects py-5 bg-white">
-        <div class="container text-center">
-            <div>
-                <div class="d-inline-block">
-                    <h1 class="text-center fw-bold mb-0">My Projects</h1>
-                    <div class="border border-2 border-primary rounded-5"></div>
-                </div>
-                <p class="text-center mt-3">
-                    Check out some of my recent work and the technologies I've been working with
-                </p>
+                <a href="https://wa.me/9779864439266" class="text-decoration-none" target="_blank"
+                    aria-label="WhatsApp">
+                    <i class="bi bi-whatsapp"></i>
+                </a>
             </div>
-            <div class="row text-start">
-                <div class="col-lg-4 my-3">
-                    <div class="card shadow-sm rounded-3">
-                        <img src="/image/code.jpg" alt="" class="w-100 rounded-top">
-                        <div class="p-2">
-                            <h4 class="fw-medium">E-commerce Website</h4>
-                            <p>A comprehensive learning management system with user authentication, course management,
-                                and interactive learning modules course management, and interactive learning modules.
-                            </p>
-                            <div class="btn d-flex flex-wrap gap-2 p-0 mb-2">
-                                <span class="html bg-gray border-0 rounded-3 py-1 px-3">HTML</span>
-                                <span class="html bg-gray border-0 rounded-3 py-1 px-3">CSS</span>
-                                <span class="html bg-gray border-0 rounded-3 py-1 px-3">JavaScript</span>
-                                <span class="html bg-gray  border-0 rounded-3 py-1 px-3 ">Bootstrap</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 my-3">
-                    <div class="card h-100 shadow-sm rounded-3">
-                        <img src="/image/code.jpg" alt="" class="w-100 rounded-top">
-                        <div class="p-2">
-                            <h4 class="fw-medium">E-commerce Website</h4>
-                            <p>A comprehensive learning management system with user authentication, course management,
-                                and interactive learning modules.</p>
-                            <div class="btn d-flex flex-wrap gap-2 p-0 mb-2 ">
-                                <span class="html bg-gray border-0 rounded-3 py-1 px-3">HTML</span>
-                                <span class="html bg-gray border-0 rounded-3 py-1 px-3">CSS</span>
-                                <span class="html bg-gray border-0 rounded-3 py-1 px-3">JavaScript</span>
-                                <span class="html bg-gray  border-0 rounded-3 py-1 px-3 ">Bootstrap</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 my-3">
-                    <div class="card h-100 shadow-sm rounded-3">
-                        <img src="/image/code.jpg" alt="" class="w-100 rounded-top">
-                        <div class="p-2">
-                            <h4 class="fw-medium">E-commerce Website</h4>
-                            <p>A comprehensive learning management system with user authentication, course management,
-                                and interactive learning modules.</p>
-                            <div class="btn d-flex flex-wrap gap-2 p-0 mb-2">
-                                <span class="html bg-gray border-0 rounded-3 py-1 px-3">HTML</span>
-                                <span class="html bg-gray border-0 rounded-3 py-1 px-3">CSS</span>
-                                <span class="html bg-gray border-0 rounded-3 py-1 px-3">JavaScript</span>
-                                <span class="html bg-gray  border-0 rounded-3 py-1 px-3 ">Bootstrap</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div>
+                <a href="RESUME_SANGAMGIRI.pdf" class="btn btn-primary btn-lg me-2 px-4" download>Download Resume</a>
+                <a href="#contact" class="btn btn-outline-secondary btn-lg px-4">Contact Me</a>
             </div>
         </div>
     </section>
 
+    <!-- About -->
+    <section id="about" class="bg-subtle">
+        <div class="container" data-aos="fade-up">
+            <h2 class="section-title text-center mb-2">About Me</h2>
+            <p class="section-subtitle text-center text-muted">My Professional Journey & Aspirations</p>
+            <div class="row align-items-center gx-5">
+                <div class="col-lg-6 mb-4 mb-lg-0">
+                    <h4 class="fw-semibold mb-3">Who I Am</h4>
+                    <p class="text-muted">
+                        I’m a 5th-semester B.Sc. IT student at Infomax College (affiliated with Asia Pacific University)
+                        with a strong passion for web development. I excel at transforming ideas into responsive,
+                        user-friendly web interfaces using HTML, CSS, Bootstrap, JavaScript, React, and Next.js.
+                        I also do UI/UX design to create engaging and intuitive user experiences.
+                    </p>
+                    <p class="text-muted">
+                        My goal is to become a full-stack developer. I am currently deepening my frontend expertise with
+                        these technologies while actively learning backend technologies like PHP and Laravel to build
+                        complete, robust web solutions.
+                    </p>
 
-    <section class="my-skills py-5">
-        <div class="container text-center">
-            <div>
-                <div class="d-inline-block text-center">
-                    <h1 class="text-center fw-bold mb-0">My Skills</h1>
-                    <div class="border border-2 border-primary rounded-5"></div>
                 </div>
-                <p class="text-center mt-3"> Check out some of my recent work and the technologies I've been working
-                    with </p>
-            </div>
-            <div class="row">
-                <div class="col-lg-6 my-3">
-                    <div class="card border-2 w-100 p-3">
-                        <h4>Technical Skills</h4>
-                        <div class="d-flex justify-content-between">
-                            <p class="mb-0">HTML</p>
-                            <p class="mb-0">95%</p>
-                        </div>
-                        <div class="progress-bar mb-3 mt-2">
-                            <div class="progress" data-width="95%"></div>
-                        </div>
-                        <div class="d-flex justify-content-between">
-                            <p class="mb-0">CSS</p>
-                            <p class="mb-0">90%</p>
-                        </div>
-                        <div class="progress-bar mb-3 mt-2">
-                            <div class="progress" data-width="90%"></div>
-                        </div>
-                        <div class="d-flex justify-content-between">
-                            <p class="mb-0">JavaScript</p>
-                            <p class="mb-0">50%</p>
-                        </div>
-                        <div class="progress-bar mb-3 mt-2">
-                            <div class="progress" data-width="50%"></div>
-                        </div>
-                        <div class="d-flex justify-content-between">
-                            <p class="mb-0">Next JS</p>
-                            <p class="mb-0">50%</p>
-                        </div>
-                        <div class="progress-bar mb-3 mt-2">
-                            <div class="progress" data-width="50%"></div>
-                        </div>
-                        <div class="d-flex justify-content-between">
-                            <p class="mb-0">React</p>
-                            <p class="mb-0">30%</p>
-                        </div>
-                        <div class="progress-bar mb-3 mt-2">
-                            <div class="progress" data-width="30%"></div>
-                        </div>
-                        <div class="d-flex justify-content-between">
-                            <p class="mb-0">Bootstrap</p>
-                            <p class="mb-0">90%</p>
-                        </div>
-                        <div class="progress-bar mb-3 mt-2">
-                            <div class="progress" data-width="90%"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6 my-3">
-                    <div class="card border-2 w-100 p-3">
-                        <h4>Additional Skills</h4>
-                        <div class="d-flex justify-content-between">
-                            <p class="mb-0">UI/UX Design</p>
-                            <p class="mb-0">95%</p>
-                        </div>
-                        <div class="progress-bar mb-3 mt-2">
-                            <div class="progress" data-width="95%"></div>
-                        </div>
-                        <div class="d-flex justify-content-between">
-                            <p class="mb-0">Responsive Design</p>
-                            <p class="mb-0">90%</p>
-                        </div>
-
-                        <div class="progress-bar mb-3 mt-2">
-                            <div class="progress" data-width="90%"></div>
-                        </div>
-                        <div class="d-flex justify-content-between">
-                            <p class="mb-0">Git/GItHub</p>
-                            <p class="mb-0">50%</p>
-                        </div>
-                        <div class="progress-bar mb-3 mt-2">
-                            <div class="progress" data-width="50%"></div>
-                        </div>
-                        <div class="d-flex justify-content-between">
-                            <p class="mb-0">Next JS</p>
-                            <p class="mb-0">50%</p>
-                        </div>
-                        <div class="progress-bar mb-3 mt-2">
-                            <div class="progress" data-width="50%"></div>
-                        </div>
-                        <div class="d-flex justify-content-between">
-                            <p class="mb-0">React</p>
-                            <p class="mb-0">30%</p>
-                        </div>
-                        <div class="progress-bar mb-3 mt-2">
-                            <div class="progress" data-width="30%"></div>
-                        </div>
-                        <div class="d-flex justify-content-between">
-                            <p class="mb-0">Bootstrap</p>
-                            <p class="mb-0">90%</p>
-                        </div>
-                        <div class="progress-bar mb-3 mt-2">
-                            <div class="progress" data-width="90%"></div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="Get-In-Touch py-5 bg-white">
-        <div class="container text-center">
-            <div>
-                <div class="d-inline-block">
-                    <h1 class="text-center fw-bold mb-0">Get in Touch</h1>
-                    <div class="border border-2 border-primary rounded-5"></div>
-                </div>
-                <p class="text-center mt-3">
-                    Check out some of my recent work and the technologies I've been working with
-                </p>
-            </div>
-            <div class="row text-start">
                 <div class="col-lg-6">
-                    <h3>Lets Talk</h3>
-                    <p>Whether you have a project that needs a frontend developer or just want to connect, I'm always
-                        open to discussing new opportunities and ideas.</p>
-                    <div class="border my-3 py-2 px-3 rounded-3 d-flex justify-content-spacebetween align-items-center"
-                        style="max-width: 320px;">
-                        <div class="border rounded-circle me-3 d-flex justify-content-center align-items-center bg-primary-subtle"
-                            style="width: 40px; height: 40px;">
-                            <i class="bi bi-envelope text-blue z-1"></i>
-                        </div>
-                        <div>
-                            <h6>Email:</h6>
-                            <p>girisangam64@gmail.com</p>
-                        </div>
-                    </div>
+                    <ul class="timeline list-unstyled ps-3">
+                        <li class="mb-4">
+                            <strong><i class="bi bi-mortarboard-fill me-2"></i>B.Sc. IT Student</strong>
+                            <p class="text-muted mb-0">Currently in the 5th semester, building foundational and advanced
+                                knowledge in Information Technology.</p>
+                        </li>
+                        <li class="mb-4">
+                            <strong><i class="bi bi-code-slash me-2"></i>Frontend Focused & UI/UX Design
+                                Enthusiast</strong>
+                            <p class="text-muted mb-0">Mastering frontend tools like HTML, CSS, Bootstrap, JavaScript,
+                                React, and Next.js, with a
+                                strong emphasis on clean code and creating engaging, user-friendly interfaces.</p>
+                        </li>
+                        <li>
+                            <strong><i class="bi bi-hdd-stack-fill me-2"></i>Expanding to Backend</strong>
+                            <p class="text-muted mb-0">Actively learning PHP & Laravel to understand server-side logic,
+                                databases, and build full-stack applications.</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
 
-                    <div class="border my-3 py-2 px-3 rounded-3 d-flex justify-content-spacebetween align-items-center"
-                        style="max-width: 320px;">
-                        <div class="border rounded-circle me-3 d-flex justify-content-center align-items-center bg-primary-subtle"
-                            style="width: 40px; height: 40px;">
-                            <i class="bi bi-envelope text-blue z-1"></i>
-                        </div>
-                        <div>
-                            <h6>Phone:</h6>
-                            <p>9864439266</p>
-                        </div>
+
+    <!-- Skills -->
+    <section id="skills">
+        <div class="container" data-aos="fade-up">
+            <h2 class="section-title text-center mb-2">My Skills</h2>
+            <p class="section-subtitle text-center text-muted">The Technologies I Work With</p>
+            <div class="row gy-4">
+                <div class="col-md-4">
+                    <div class="card-custom p-4 text-center">
+                        <h5 class="fw-semibold mb-3">Frontend</h5><span class="badge m-1">HTML5</span><span
+                            class="badge m-1">CSS3</span><span class="badge m-1">JavaScript (ES6+)</span><span
+                            class="badge m-1">Bootstrap</span><span class="badge m-1">React</span><span
+                            class="badge m-1">Next.js</span>
                     </div>
-                    <div class="border my-3 py-2 px-3 rounded-3 d-flex justify-content-spacebetween align-items-center"
-                        style="max-width: 320px;">
-                        <div class="border rounded-circle me-3 d-flex justify-content-center align-items-center bg-primary-subtle"
-                            style="width: 40px; height: 40px;">
-                            <i class="bi bi-envelope text-blue z-1"></i>
-                        </div>
-                        <div>
-                            <h6>Location:</h6>
-                            <p>Pokhara, Nepal</p>
+                </div>
+                <div class="col-md-4">
+                    <div class="card-custom p-4 text-center">
+                        <h5 class="fw-semibold mb-3">Backend & Databases</h5><span class="badge m-1">PHP
+                            (Learning)</span><span class="badge m-1">Laravel (Learning)</span><span
+                            class="badge m-1">MySQL (Basic)</span><span class="badge m-1">RESTful APIs</span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card-custom p-4 text-center">
+                        <h5 class="fw-semibold mb-3">Tools & Design</h5><span class="badge m-1">Git & GitHub</span><span
+                            class="badge m-1">VS Code</span><span class="badge m-1">Figma</span><span
+                            class="badge m-1">UI/UX Principles</span><span class="badge m-1">Responsive Design</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects -->
+    <section id="projects" class="bg-subtle">
+        <div class="container" data-aos="fade-up">
+            <h2 class="section-title text-center mb-2">Featured Projects</h2>
+            <p class="section-subtitle text-center text-muted">A Selection of My Work</p>
+            <div class="row g-4">
+                <div class="col-lg-6">
+                    <div class="card-custom"><img src="image/kaamsansar.png" alt="KamSansar Project" class="img-fluid">
+                        <div class="p-4">
+                            <h5 class="fw-semibold">KamSansar — Job Platform</h5>
+                            <p class="text-muted small">Designed and implemented a responsive frontend for a job portal,
+                                focusing on job filtering, search functionality, and a seamless user experience.</p>
+                            <div><a href="#" class="btn btn-sm btn-primary">Live Demo</a><a href="#"
+                                    class="btn btn-sm btn-outline-secondary ms-2">View Code</a></div>
                         </div>
                     </div>
                 </div>
+                <div class="col-lg-6">
+                    <div class="card-custom"><img src="image/ace.png" alt="Ace Banquet Project" class="img-fluid">
+                        <div class="p-4">
+                            <h5 class="fw-semibold">Ace Banquet — Booking Platform</h5>
+                            <p class="text-muted small">Built an intuitive interface for an event and banquet booking
+                                system, allowing users to browse packages, view details, and make bookings easily.</p>
+                            <div><a href="#" class="btn btn-sm btn-primary">Live Demo</a><a href="#"
+                                    class="btn btn-sm btn-outline-secondary ms-2">View Code</a></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="card-custom"><img src="image/shams.png" alt="Shamns Alwafa Project" class="img-fluid">
+                        <div class="p-4">
+                            <h5 class="fw-semibold">Shamns Alwafa — Hospitality Service</h5>
+                            <p class="text-muted small">Created a visually appealing UI for a hospitality management
+                                service, focusing on clean design, brand consistency, and responsive layouts for service
+                                display.</p>
+                            <div><a href="https://www.shamsalwafahospitality.com/" target="_blank"
+                                    class="btn btn-sm btn-primary" rel="noopener noreferrer">Live Demo</a>
+                                <a href="#" class="btn btn-sm btn-outline-secondary ms-2">View Code</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="card-custom"><img src="image/projectsayogi.png" alt="Project Sayogi" class="img-fluid">
+                        <div class="p-4">
+                            <h5 class="fw-semibold">Project Sayogi — Construction Management</h5>
+                            <p class="text-muted small">Developed a responsive frontend for a construction management
+                                tool, implementing features like progress tracking, risk analysis, and interactive
+                                dashboards.</p>
+                            <div><a href="https://projectsayogi.com/" class="btn btn-sm btn-primary" target="_blank"
+                                    rel="noopener noreferrer">Live Demo</a>
+                                <a href="#" class="btn btn-sm btn-outline-secondary ms-2">View Code</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-                <div class="col-md-6 my-3">
-                    <div class="contact-form card  rounded-3 p-4">
-                        <form>
-                            <div class="mb-3">
-                                <label class="form-label">Your Name</label>
-                                <input type="text" class="form-control" placeholder="Your Name">
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Email</label>
-                                <input type="email" class="form-control" placeholder="Email">
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Subject</label>
-                                <input type="text" class="form-control" placeholder="Subject">
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Message</label>
-                                <textarea class="form-control" rows="4" placeholder="Your message"></textarea>
-                            </div>
-                            <div class="d-grid">
-                                <button type="submit" class="btn bg-blue text-white">Send Message</button>
+    <!-- Certificates -->
+    <section id="certificates">
+        <div class="container" data-aos="fade-up">
+            <h2 class="section-title text-center mb-2">Licenses & Certificates</h2>
+            <p class="section-subtitle text-center text-muted">My Credentials and Achievements</p>
+            <div class="row g-4">
+                <div class="col-lg-6">
+                    <div class="card-custom p-4 d-flex align-items-center">
+                        <i class="bi bi-award-fill fs-2 me-4"
+                            style="background: var(--gradient);-webkit-background-clip: text; color: transparent;"></i>
+                        <div>
+                            <h5 class="fw-semibold mb-1">Frontend Developer Internship</h5>
+                            <p class="text-muted mb-1">Tuki Soft Pvt. Ltd. (6 Months)</p>
+                            <a href="#" class="text-decoration-none" style="color: var(--link);">View Certificate <i
+                                    class="bi bi-arrow-up-right-square-fill small"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="card-custom p-4 d-flex align-items-center">
+                        <i class="bi bi-patch-check-fill fs-2 me-4"
+                            style="background: var(--gradient);-webkit-background-clip: text; color: transparent;"></i>
+                        <div>
+                            <h5 class="fw-semibold mb-1">Responsive Web Design</h5>
+                            <p class="text-muted mb-1">Issued by: freeCodeCamp</p>
+                            <a href="#" class="text-decoration-none" style="color: var(--link);">Show Credential <i
+                                    class="bi bi-arrow-up-right-square-fill small"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="bg-subtle">
+        <div class="container" data-aos="fade-up">
+            <h2 class="section-title text-center mb-2">Get In Touch</h2>
+            <p class="section-subtitle text-center text-muted">I'm available for new opportunities. Let's build
+                something great together!</p>
+            <div class="row gx-lg-5">
+                <div class="col-lg-7 mb-5 mb-lg-0">
+                    <div class="card-custom p-4 p-lg-5">
+                        <h4 class="fw-semibold mb-4">Send Me a Message</h4>
+                        <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST" class="contact-form">
+                            <div class="row g-3">
+                                <div class="col-md-6"><input type="text" name="name" class="form-control"
+                                        placeholder="Your Name" required></div>
+                                <div class="col-md-6"><input type="email" name="email" class="form-control"
+                                        placeholder="Your Email" required></div>
+                                <div class="col-12"><textarea name="message" class="form-control" rows="5"
+                                        placeholder="Your Message" required></textarea></div>
+                                <div class="col-12"><button type="submit" class="btn btn-primary btn-lg w-100">Send
+                                        Message</button></div>
                             </div>
                         </form>
                     </div>
                 </div>
-            </div>
-        </div>
-    </section>
+                <div class="col-lg-5">
+                    <h4 class="fw-semibold mb-4">Contact Information</h4>
+                    <p class="text-muted mb-4">Feel free to reach out via email, phone, or my social networks. I'm
+                        always open to discussing new projects or creative ideas.</p>
+                    <a href="mailto:girisangam64@gmail.com" class="contact-info-item">
+                        <i class="bi bi-envelope-fill"></i>
+                        <span>girisangam64@gmail.com</span>
+                    </a>
+                    <a href="tel:+9779864439266" class="contact-info-item">
+                        <i class="bi bi-telephone-fill"></i>
+                        <span>+977 9864439266</span>
+                    </a>
+                    <div class="mt-4 pt-2">
+                        <h5 class="fw-semibold mb-3">Follow Me</h5>
+                        <div class="contact-social">
+                            <a href="https://github.com/sangamgiri62" target="_blank" aria-label="GitHub"
+                                class="text-decoration-none">
+                                <i class="bi bi-github"></i>
+                            </a>
+                            <a href="https://www.linkedin.com/in/sangam-giri-98442b32b" target="_blank"
+                                aria-label="LinkedIn" class="text-decoration-none">
+                                <i class="bi bi-linkedin"></i>
+                            </a>
+                            <a href="https://www.facebook.com/share/1CbbcVMvnn" target="_blank" aria-label="Facebook"
+                                class="text-decoration-none">
+                                <i class="bi bi-facebook"></i>
+                            </a>
+                            <a href="https://www.instagram.com/sangamgiri01" target="_blank" aria-label="Instagram"
+                                class="text-decoration-none">
+                                <i class="bi bi-instagram"></i>
+                            </a>
+                            <a href="https://wa.me/9779864439266" target="_blank" aria-label="WhatsApp"
+                                class="text-decoration-none">
+                                <i class="bi bi-whatsapp"></i>
+                            </a>
+                        </div>
 
-    <section class="footer bg-dark text-white">
-        <div class="container">
-            <div class="row pt-5">
-                <div class="col-md-3 my-3">
-                    <h5>Sangam Giri</h5>
-                    <p class="my-1">Frontend Developer & IT Student dedicated to creating responsive, user-friendly web
-                        experiences.
-                    </p>
-                </div>
-                <div class="col-md-3 my-3">
-                    <h5>Quicks Links</h5>
-                    <p class="my-1 "> <a href="">Home</a></p>
-                    <p class="my-1 "> <a href="">About</a></p>
-                    <p class="my-1 "> <a href="">Projects</a></p>
-                    <p class="my-1 "> <a href="">Skills</a></p>
-                    <p class="my-1 "> <a href="">Contact</a></p>
-                </div>
-                <div class="col-md-3 my-3">
-                    <h5>Contact</h5>
-                    <p class="my-1 "> <a href="">Pokhara, Nepal</a></p>
-                    <p class="my-1 "> <a href="">girisangam64@gmail.com</a>
-                    <p class="my-1 "> <a href="">+977 9876543210</a></p>
-                </div>
-                <div class="col-md-3 my-3">
-                    <h5>Connect</h5>
-                    <div class="d-flex">
-                        <a href="#"
-                            class="bg-primary-subtle rounded-circle me-2 d-flex justify-content-center align-items-center"
-                            style="width: 40px; height: 40px;">
-                            <i class="bi bi-facebook text-blue"></i>
-                        </a>
-                        <a href="#"
-                            class="bg-primary-subtle rounded-circle me-2 d-flex justify-content-center align-items-center"
-                            style="width: 40px; height: 40px;">
-                            <i class="bi bi-whatsapp text-blue"></i>
-                        </a>
-                        <a href="#"
-                            class="bg-primary-subtle rounded-circle me-2 d-flex justify-content-center align-items-center"
-                            style="width: 40px; height: 40px;">
-                            <i class="bi bi-instagram text-blue"></i>
-                        </a>
-                        <a href="#"
-                            class="bg-primary-subtle rounded-circle me-2 d-flex justify-content-center align-items-center"
-                            style="width: 40px; height: 40px;">
-                            <i class="bi bi-linkedin text-blue"></i>
-                        </a>
                     </div>
                 </div>
             </div>
         </div>
-        </div>
-        </div>
-        <hr>
-        <div class="container d-flex justify-content-between">
-            <div class="div">
-                <p>@2025 Sangam Giri. All rights reserved</p>
-            </div>
-            <div class="d-flex gap-4 float-end">
-                <p>Privacy Policy</p>
-                <p>Terms and Services</p>
-            </div>
     </section>
 
-    <script>
-        // Animate the progress bars
-        document.querySelectorAll('.progress').forEach(bar => {
-            let width = bar.getAttribute('data-width');
-            bar.style.width = width;
-        });
-    </script>
-    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-    <script>
-        AOS.init();
-    </script>
+    <!-- Footer -->
+    <footer class="site-footer">
+        <p class="mb-0">Copyright &copy; <span id="copyright-year"></span> Sangam Giri. All Rights Reserved.</p>
+    </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-        crossorigin="anonymous"></script>
+    <!-- Scroll-to-top Button -->
+    <button id="scrollTop" title="Go to top"><i class="bi bi-arrow-up"></i></button>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 800, once: true, offset: 50 });
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const themeIcon = themeToggleBtn.querySelector('i');
+        const applyTheme = (theme) => {
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
+            themeIcon.classList.toggle('bi-sun-fill', theme === 'dark');
+            themeIcon.classList.toggle('bi-moon-stars-fill', theme === 'light');
+        };
+        themeToggleBtn.addEventListener('click', () => {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            applyTheme(currentTheme === 'dark' ? 'light' : 'dark');
+        });
+        const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        applyTheme(savedTheme);
+        const navbar = document.querySelector('.navbar');
+        const scrollTopBtn = document.getElementById('scrollTop');
+        window.addEventListener('scroll', () => {
+            navbar.classList.toggle('scrolled', window.scrollY > 50);
+            scrollTopBtn.classList.toggle('show', window.scrollY > 300);
+        });
+        scrollTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+        document.getElementById('copyright-year').textContent = new Date().getFullYear();
+        const navLinks = document.querySelectorAll('.nav-link');
+        const menuToggle = document.getElementById('navMenu');
+        if (menuToggle) {
+            const bsCollapse = new bootstrap.Collapse(menuToggle, { toggle: false });
+            navLinks.forEach((link) => {
+                link.addEventListener('click', () => {
+                    if (menuToggle.classList.contains('show')) {
+                        bsCollapse.toggle();
+                    }
+                });
+            });
+        }
+    </script>
 </body>
 
 </html>
