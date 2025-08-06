@@ -1,4 +1,3 @@
- 
         AOS.init({ duration: 800, once: true, offset: 50 });
         const themeToggleBtn = document.getElementById('theme-toggle');
         const themeIcon = themeToggleBtn.querySelector('i');
