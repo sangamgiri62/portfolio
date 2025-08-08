@@ -124,8 +124,8 @@
         }
 
         .hero-avatar {
-            width: 220px;
-            height: 220px;
+            width: 200px;
+            height: 200px;
             border-radius: 50%;
             object-fit: cover;
             border: 5px solid;
@@ -337,30 +337,43 @@
 <body>
 
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg fixed-top py-3">
-        <div class="container">
-            <a class="navbar-brand" href="#hero">Sangam Giri</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu"
-                aria-controls="navMenu" aria-expanded="false" aria-label="Toggle navigation">
-                <i class="bi bi-list" style="color: var(--fg); font-size: 1.8rem;"></i>
-            </button>
-            <div class="collapse navbar-collapse" id="navMenu">
-                <ul class="navbar-nav ms-auto gap-lg-4">
-                    <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#skills">Skills</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#projects">Projects</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#certificates">Certificates</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
-                    <li class="nav-item d-flex align-items-center ms-lg-3 mt-3 mt-lg-0">
-                        <button id="theme-toggle" class="btn btn-sm"
-                            style="color: var(--muted); border-color: var(--muted);" aria-label="Toggle theme">
-                            <i class="bi bi-moon-stars-fill"></i>
-                        </button>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+  <nav class="navbar navbar-expand-lg fixed-top py-3">
+  <div class="container d-flex align-items-center justify-content-between">
+    <a class="navbar-brand" href="#hero">Sangam Giri</a>
+
+    <div class="d-flex align-items-center">
+      <!-- Mobile theme toggle button -->
+      <button id="theme-toggle-mobile" class="btn btn-sm me-2 d-lg-none"
+        style="color: var(--muted); border-color: var(--muted);" aria-label="Toggle theme">
+        <i class="bi bi-moon-stars-fill"></i>
+      </button>
+
+      <!-- Hamburger toggler -->
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu"
+        aria-controls="navMenu" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="bi bi-list" style="color: var(--fg); font-size: 1.8rem;"></i>
+      </button>
+    </div>
+
+    <!-- Navbar links -->
+    <div class="collapse navbar-collapse" id="navMenu">
+      <ul class="navbar-nav ms-auto gap-lg-4 align-items-lg-center">
+        <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+        <li class="nav-item"><a class="nav-link" href="#skills">Skills</a></li>
+        <li class="nav-item"><a class="nav-link" href="#projects">Projects</a></li>
+        <li class="nav-item"><a class="nav-link" href="#certificates">Certificates</a></li>
+        <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+        <!-- Desktop theme toggle button -->
+        <li class="nav-item d-none d-lg-flex ms-lg-3">
+          <button id="theme-toggle-desktop" class="btn btn-sm"
+            style="color: var(--muted); border-color: var(--muted);" aria-label="Toggle theme">
+            <i class="bi bi-moon-stars-fill"></i>
+          </button>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
 
     <!-- Hero -->
     <section id="hero">
@@ -392,7 +405,8 @@
                 </a>
             </div>
             <div>
-                <a href="RESUME_SANGAMGIRI.pdf" class="btn btn-primary btn-lg me-2 px-4 mb-2" download>Download Resume</a>
+                <a href="RESUME_SANGAMGIRI.pdf" class="btn btn-primary btn-lg me-2 px-4 mb-2" download>Download
+                    Resume</a>
                 <a href="#contact" class="btn btn-outline-secondary btn-lg px-4 mb-2">Contact Me</a>
             </div>
         </div>
@@ -575,30 +589,47 @@
     <section id="contact" class="bg-subtle">
         <div class="container" data-aos="fade-up">
             <h2 class="section-title text-center mb-2">Get In Touch</h2>
-            <p class="section-subtitle text-center text-muted">I'm available for new opportunities. Let's build
-                something great together!</p>
+            <p class="section-subtitle text-center text-muted">
+                I'm available for new opportunities. Let's build something great together!
+            </p>
             <div class="row gx-lg-5">
                 <div class="col-lg-7 mb-5 mb-lg-0">
                     <div class="card-custom p-4 p-lg-5">
                         <h4 class="fw-semibold mb-4">Send Me a Message</h4>
-                        <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST" class="contact-form">
+
+                        <form id="contactform" class="contact-form">
                             <div class="row g-3">
-                                <div class="col-md-6"><input type="text" name="name" class="form-control"
-                                        placeholder="Your Name" required></div>
-                                <div class="col-md-6"><input type="email" name="email" class="form-control"
-                                        placeholder="Your Email" required></div>
-                                <div class="col-12"><textarea name="message" class="form-control" rows="5"
-                                        placeholder="Your Message" required></textarea></div>
-                                <div class="col-12"><button type="submit" class="btn btn-primary btn-lg w-100">Send
-                                        Message</button></div>
+                                <div class="col-md-6">
+                                    <input type="text" id="name" class="form-control" placeholder="Your Name" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="email" id="email" class="form-control" placeholder="Your Email"
+                                        required>
+                                </div>
+                                <div class="col-12">
+                                    <input type="text" id="subject" class="form-control" placeholder="Subject" required>
+                                </div>
+                                <div class="col-12">
+                                    <textarea id="message" class="form-control" rows="5" placeholder="Your Message"
+                                        required></textarea>
+                                </div>
+                                <div class="col-12">
+                                    <button type="submit" class="btn btn-primary btn-lg w-100">Send Message</button>
+                                </div>
                             </div>
                         </form>
+
+                        <div id="success" class="mt-3 text-success fw-semibold"></div>
+                        <div id="error" class="mt-3 text-danger fw-semibold"></div>
                     </div>
                 </div>
+
                 <div class="col-lg-5">
                     <h4 class="fw-semibold mb-4">Contact Information</h4>
-                    <p class="text-muted mb-4">Feel free to reach out via email, phone, or my social networks. I'm
-                        always open to discussing new projects or creative ideas.</p>
+                    <p class="text-muted mb-4">
+                        Feel free to reach out via email, phone, or my social networks. I'm
+                        always open to discussing new projects or creative ideas.
+                    </p>
                     <a href="mailto:girisangam64@gmail.com" class="contact-info-item">
                         <i class="bi bi-envelope-fill"></i>
                         <span>girisangam64@gmail.com</span>
@@ -607,6 +638,7 @@
                         <i class="bi bi-telephone-fill"></i>
                         <span>+977 9864439266</span>
                     </a>
+
                     <div class="mt-4 pt-2">
                         <h5 class="fw-semibold mb-3">Follow Me</h5>
                         <div class="contact-social">
@@ -631,12 +663,53 @@
                                 <i class="bi bi-whatsapp"></i>
                             </a>
                         </div>
-
                     </div>
                 </div>
             </div>
         </div>
     </section>
+
+    <!-- EmailJS CDN -->
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@2.6.4/dist/email.min.js"></script>
+
+<script>
+    (function () {
+        // Initialize EmailJS with your Public Key
+        emailjs.init("Yx9ZPtFPh8CSolAy0"); // Replace with your EmailJS Public Key
+    })();
+
+    $("#contactform").on("submit", function (e) {
+        e.preventDefault();
+
+        const name = $("#name").val().trim();
+        const email = $("#email").val().trim();
+        const subject = $("#subject").val().trim();
+        const message = $("#message").val().trim();
+
+        let hasError = false;
+
+        // Validation
+        if (!name) { $("#name").addClass("error-color"); hasError = true; } else { $("#name").removeClass("error-color"); }
+        if (!email) { $("#email").addClass("error-color"); hasError = true; } else { $("#email").removeClass("error-color"); }
+        if (!subject) { $("#subject").addClass("error-color"); hasError = true; } else { $("#subject").removeClass("error-color"); }
+        if (!message) { $("#message").addClass("error-color"); hasError = true; } else { $("#message").removeClass("error-color"); }
+
+        if (hasError) return;
+
+        // Send email using EmailJS
+        emailjs.send("service_w635iwc", "template_38va44d", {
+            from_name: name,
+            from_email: email,
+            subject: subject,
+            message: message
+        }).then(function (response) {
+            $("#success").addClass("show-result").html("✅ Message sent successfully!");
+            $("#contactform")[0].reset();
+        }, function (error) {
+            $("#error").addClass("show-result").html("❌ Failed to send message. Please try again.");
+        });
+    });
+</script>
 
     <!-- Footer -->
     <footer class="site-footer">
@@ -651,40 +724,71 @@
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
         AOS.init({ duration: 800, once: true, offset: 50 });
-        const themeToggleBtn = document.getElementById('theme-toggle');
-        const themeIcon = themeToggleBtn.querySelector('i');
-        const applyTheme = (theme) => {
-            document.documentElement.setAttribute('data-theme', theme);
-            localStorage.setItem('theme', theme);
-            themeIcon.classList.toggle('bi-sun-fill', theme === 'dark');
-            themeIcon.classList.toggle('bi-moon-stars-fill', theme === 'light');
-        };
-        themeToggleBtn.addEventListener('click', () => {
-            const currentTheme = document.documentElement.getAttribute('data-theme');
-            applyTheme(currentTheme === 'dark' ? 'light' : 'dark');
-        });
-        const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-        applyTheme(savedTheme);
-        const navbar = document.querySelector('.navbar');
-        const scrollTopBtn = document.getElementById('scrollTop');
-        window.addEventListener('scroll', () => {
-            navbar.classList.toggle('scrolled', window.scrollY > 50);
-            scrollTopBtn.classList.toggle('show', window.scrollY > 300);
-        });
-        scrollTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-        document.getElementById('copyright-year').textContent = new Date().getFullYear();
-        const navLinks = document.querySelectorAll('.nav-link');
-        const menuToggle = document.getElementById('navMenu');
-        if (menuToggle) {
-            const bsCollapse = new bootstrap.Collapse(menuToggle, { toggle: false });
-            navLinks.forEach((link) => {
-                link.addEventListener('click', () => {
-                    if (menuToggle.classList.contains('show')) {
-                        bsCollapse.toggle();
-                    }
-                });
-            });
-        }
+
+const themeToggleMobile = document.getElementById('theme-toggle-mobile');
+const themeToggleDesktop = document.getElementById('theme-toggle-desktop');
+
+// Helper function to update icons on both toggle buttons
+function updateThemeIcons(theme) {
+  const moonClass = 'bi-moon-stars-fill';
+  const sunClass = 'bi-sun-fill';
+
+  [themeToggleMobile, themeToggleDesktop].forEach(btn => {
+    if (!btn) return; // in case one button doesn't exist
+    const icon = btn.querySelector('i');
+    icon.classList.toggle(sunClass, theme === 'dark');
+    icon.classList.toggle(moonClass, theme === 'light');
+  });
+}
+
+const applyTheme = (theme) => {
+  document.documentElement.setAttribute('data-theme', theme);
+  localStorage.setItem('theme', theme);
+  updateThemeIcons(theme);
+};
+
+function toggleTheme() {
+  const currentTheme = document.documentElement.getAttribute('data-theme');
+  applyTheme(currentTheme === 'dark' ? 'light' : 'dark');
+}
+
+// Add event listeners to **both** buttons
+if (themeToggleMobile) themeToggleMobile.addEventListener('click', toggleTheme);
+if (themeToggleDesktop) themeToggleDesktop.addEventListener('click', toggleTheme);
+
+const savedTheme =
+  localStorage.getItem('theme') ||
+  (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+
+applyTheme(savedTheme);
+
+// Your existing scroll + other JS below untouched
+
+const navbar = document.querySelector('.navbar');
+const scrollTopBtn = document.getElementById('scrollTop');
+
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('scrolled', window.scrollY > 50);
+  scrollTopBtn.classList.toggle('show', window.scrollY > 300);
+});
+
+scrollTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+document.getElementById('copyright-year').textContent = new Date().getFullYear();
+
+const navLinks = document.querySelectorAll('.nav-link');
+const menuToggle = document.getElementById('navMenu');
+if (menuToggle) {
+  const bsCollapse = new bootstrap.Collapse(menuToggle, { toggle: false });
+  navLinks.forEach((link) => {
+    link.addEventListener('click', () => {
+      if (menuToggle.classList.contains('show')) {
+        bsCollapse.toggle();
+      }
+    });
+  });
+}
+
     </script>
 </body>
 
